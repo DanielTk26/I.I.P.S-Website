@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <title>International Indian Public School</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav-wrapper">
+      <div class="left-side">
+        <div class="nav-link-wrapper">
+          <a href="index.html">Home</a>
+        </div>
+
+        <div class="nav-link-wrapper ">
+          <a href="about.html">About</a>
+        </div>
+      
+        <div class="nav-link-wrapper">
+          <a href="Admission.html">Admission 2020-2021</a>
+          
+        </div>
+
+
+
+        <div class="nav-link-wrapper active-nav-link">
+          <a href="community.html">Community</a>
+          
+        </div>
+
+
+
+        <div class="nav-link-wrapper">
+          <a href="contact.html">Contact Us</a>
+          
+        </div>
+  
+
+
+      </div>
+
+      <div class="right-side">
+        <div class="brand">
+          <a href="index.html"><img src = "logo2.png"/></a>   
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAgk97KVAh0OZc5LeyhGL65YekCYkBT3IU",
+    authDomain: "chat-5db0a.firebaseapp.com",
+    databaseURL: "https://chat-5db0a.firebaseio.com",
+    projectId: "chat-5db0a",
+    storageBucket: "chat-5db0a.appspot.com",
+    messagingSenderId: "96959936061",
+    appId: "1:96959936061:web:dd9438c7c9d2f20307dc54"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+var myName = prompt("Enter Your Name");
+
+   
+   function sendMessage() {
+    
+   // get message
+
+   var message = document.getElementById("message").value
+   
+   // save in database
+   firebase.database().ref("messages").push().set({
+    "sender": myName,
+    "message": message,
+   });
+
+
+   // prevent form from from submitting
+   return false;
+   }
+
+
+  firebase.database().ref("messages").on("child_added", function (snapshot) {
+   var html = "";
+   
+   html += "<li id='message-" + snapshot.key + "'>";
+
+    if(snapshot.val().sender == myName) {
+      html += "<button data-id='" + snapshot.key + "' onClick='deleteMessage(this);'>";
+        html += "Delete"
+      html += "</button>";
+    }
+
+   html += snapshot.val().sender +": " + snapshot.val().message;
+   html += "</li>";
+
+   document.getElementById("messages").innerHTML += html;
+  });
+
+  
+
+ function deleteMessage(self) {
+ // get Message ID
+  var messageId = self.getAttribute("data-id"); 
+
+ // delete message
+  firebase.database().ref("messages").child(messageId).remove(); 
+
+ }
+
+
+ firebase.database().ref("messages").on("child_removed", function(snapshot) {
+
+
+  document.getElementById("message-" + snapshot.key).innerHTML = "This Post Has Been Deleted";
+ });
+
+</script>
+
+<form onSubmit ="return sendMessage();">
+
+<input id = "message" placeholder="Type In Your Message" autocomplete="off">
+<input type="submit">
+
+</form>
+
+
+<ul id="messages"></ul>
+
+
+
+
+
+
+
+
+
+
+
+
