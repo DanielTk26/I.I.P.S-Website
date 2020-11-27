@@ -23,6 +23,7 @@ let gm = ['Good Morning!']
 let ga = ['Good Afternoon!']
 let ge = ['Good Evening']
 let gn = ['Good Night!']
+let enroll = ['Hey all the details related to you childs admission is in our official website  http://iipsr.edu.sa/']
 let tr = ['Yes we have school buses, that can pick your ward to school or drop him home or even both. For further clarification, please visit our official site http://iipsr.edu.sa/ ']
 let bye = ['Bye! See you soon.']
 
@@ -65,11 +66,24 @@ function chatbotvoice(message){
         let finalresult = hobbies[Math.floor(Math.random() * hobbies.length)];
         speech.text = finalresult;
     }
+   
+    if(message.includes('enroll')){
+        let finalresult = enroll[Math.floor(Math.random() * enroll.length)];
+        speech.text = finalresult;
+    }
+   
     if(message.includes('original')){
         let finalresult = pizzas[Math.floor(Math.random() * pizzas.length)];
         speech.text = finalresult;
         window.open('http://iipsr.edu.sa/');
     }
+
+    if(message.includes('official')){
+        let finalresult = pizzas[Math.floor(Math.random() * pizzas.length)];
+        speech.text = finalresult;
+        window.open('http://iipsr.edu.sa/');
+    }
+
 
     if(message.includes('made')){
         let finalresult = made[Math.floor(Math.random() * made.length)];
